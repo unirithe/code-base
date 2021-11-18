@@ -25,7 +25,7 @@ a1.sources.r1=/usr/local/flume/taildir_position.json
 
 #配置拦截器(ETL数据清晰，判断JSON是否完整)
 a1.sources.r1.interceptors=i1
-a1.sources.r1.interceptors.i1.type=com.uni.flume.interceptor.ETLInterceptor$Build
+a1.sources.r1.interceptors.i1.type=com.uni.flume.interceptor.ETLInterceptor$Builder
 
 # 配置Chanel
 a1.channels.c1.type=org.apache.flume.channel.kafka.KafkaChannel
