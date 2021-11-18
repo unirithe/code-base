@@ -2,9 +2,41 @@
 
 JDK 1.8 + Flume 1.9
 
-# 作用
-简单的数据清洗: 提供Flume集群一个拦截器执行的Jar包程序，可以过滤掉非法JSON数据的文本
+# 作用以及使用
+作用：简单的数据清洗: 提供Flume集群一个拦截器执行的Jar包程序，可以过滤掉非法JSON数据的文本
 
+使用：使用Maven打包后会出现两种jar包，一种是with-dependency后缀带有依赖包
+
+第一步，将该jar包放在Flume集群所有节点的flume目录下的lib文件夹
+
+第二步，指定flume拦截器的执行类，在所有集群节点flume目录下的conf文件夹中新建flume启动的配置文件比如 `file-flume-kafka.conf`，以下是集群测试的有效参考配置，可当做参考
+
+```xml
+# 定义组件
+a1.sources=r1
+a1.channels=c1
+
+#配置source (taildirsouces)
+a1.source.r1.type=TAILDIR
+a1.sources.r1.filegroups=f1
+a1.sources.r1.filegroups.f1=/usr/local/log/data.*
+
+a1.sources.r1=/usr/local/flume/taildir_position.json
+
+#配置拦截器(ETL数据清晰，判断JSON是否完整)
+a1.sources.r1.interceptors=i1
+a1.sources.r1.interceptors.i1.type=com.uni.flume.interceptor.ETLInterceptor$Build
+
+# 配置Chanel
+a1.channels.c1.type=org.apache.flume.channel.kafka.KafkaChannel
+a1.channels.c1.kafka.bootstrap.servers=hadoop101:9092,hadoop102:9092
+a1.channels.c1.kafka.topic=topic_log
+a1.channels.c1.parseAsFlumeEvent=False
+# 配置sink （无）
+
+# 拼接组件
+a1.sources.r1.channels=c1
+```
 # pom.xml
 
 ```xml
