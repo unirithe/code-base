@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <option id="rate">1000</option>            <!--脚本执行的速度，单位: 毫秒-->
+    <option id="print_way">2</option>          <!-- 输出格式 0不输出1直接输出2格式化输出 -->
+    <option id="number">10</option>            <!-- 生成的数据量 -->
+    <option id="save">1</option>               <!-- 是否保存数据文件，1保存0不保存 -->
+    <option id="location">data.json</option>   <!-- 结果文件保存位置 -->
+    <option id="max_file_size">128</option>    <!-- 限制数据文本的最大大小 单位: KB (最大值为1024) -->
+</Configuration>
